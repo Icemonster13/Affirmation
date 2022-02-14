@@ -11,10 +11,11 @@ struct CircleGroupView: View {
     // MARK: - PROPERTY
     @State var ShapeColor: Color
     @State var ShapeOpacity: Double
+    @State var ImageName: String
     
     // MARK: - BODY
-    
     var body: some View {
+        // Creates a reusable asset with two circles and one image
         ZStack {
             Circle()
                 .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth: 40)
@@ -22,6 +23,10 @@ struct CircleGroupView: View {
             Circle()
                 .stroke(ShapeColor.opacity(ShapeOpacity), lineWidth: 80)
                 .frame(width: 260, height: 260, alignment: .center)
+            Image(ImageName)
+                .resizable()
+                .scaledToFit()
+                .padding()
         } //: ZSTACK
     }
 }
@@ -33,7 +38,8 @@ struct CircleGroupView_Previews: PreviewProvider {
             Color("ColorBlue")
                 .ignoresSafeArea(.all, edges: .all)
             
-            CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2)
+            CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ImageName: "character-1")
+            
         }
     }
 }
