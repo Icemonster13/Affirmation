@@ -8,20 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
-    // When the user starts, the OnboardingView screen should start
-    @AppStorage("onboarding") var isOnboardingViewActive: Bool = true
     
+    // MARK: - PROPERTIES
+    @AppStorage("onboard") var isOnboardingViewActive: Bool = true
+    @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
+    @AppStorage("settings") var isSettingViewActive: Bool = false
+    
+    // MARK: - BODY
     var body: some View {
+        
         ZStack {
             if isOnboardingViewActive {
                 OnboardingView()
+            } else if isPuzzleViewActive {
+                PuzzleView()
+            } else if isSettingViewActive {
+                SettingsView()
             } else {
                 HomeView()
             }
-        }
+        } //: ZSTACK
     }
 }
 
+// MARK: - PREVIEW
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

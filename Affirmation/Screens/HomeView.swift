@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     // MARK: PROPERTY
-    @AppStorage("onboarding") var isOnboardingViewActive: Bool = false
+    @AppStorage("onboard") var isOnboardingViewActive: Bool = false
+    @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
+    @AppStorage("settings") var isSettingViewActive: Bool = false
+    @AppStorage("gamestartdate") var gameStartDate: String = ""
     
     // MARK: BODY
     var body: some View {
@@ -25,6 +28,8 @@ struct HomeView: View {
             
             // MARK: - CENTER
             
+            Text(Date(), style: .date)
+                .font(.headline)
             Text("The time that leads to mastery is dependent on the intesity of our focus.")
                 .font(.title3)
                 .fontWeight(.light)
@@ -37,19 +42,33 @@ struct HomeView: View {
             Spacer()
             
             Button(action: {
-                isOnboardingViewActive = true
+                
+                isPuzzleViewActive.toggle()
             }) {
                 Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
                     .imageScale(.large)
-                Text("Restart")
+                Text("Play Today's Puzzle")
                     .font(.system(.title3, design: .rounded))
                     .fontWeight(.bold)
             } //: BUTTON
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
-            .controlSize(.large)
+            .controlSize(.regular)
+            
+            Spacer()
             
         } //: VSTACK
+        .overlay(
+            Button(action: {
+                isOnboardingViewActive.toggle()
+            }, label: {
+                Image(systemName: "chevron.backward.circle")
+                    .font(.title)
+                    .padding(.leading, 10)
+                    .foregroundColor(Color.secondary)
+            })
+            , alignment: .topLeading
+        )
     }
 }
 

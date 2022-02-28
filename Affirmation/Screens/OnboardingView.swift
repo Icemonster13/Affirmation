@@ -9,10 +9,13 @@ import SwiftUI
 
 struct OnboardingView: View {
     // MARK: - PROPERTY
-    @AppStorage("onboarding") var isOnBoardingViewActive: Bool = true
+    @AppStorage("onboard") var isOnboardingViewActive: Bool = true
+    
+    @State private var buttonWidth: Double = UIScreen.main.bounds.width - 80
+    @State private var buttonOffset: CGFloat = 0
+    
     
     // MARK: - BODY
-    
     var body: some View {
         ZStack {
             Color("ColorBlue")
@@ -20,36 +23,29 @@ struct OnboardingView: View {
             
             VStack(spacing: 20) {
                 // MARK: - HEADER
-                
                 Spacer()
                 
                 VStack(spacing: 0) {
-                    Text("Share.")
+                    Text("affirmation!")
                         .font(.system(size: 60))
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
-                    Text("""
-                    It's not how much we give but
-                    how much love we put into giving
-                    """)
+                    Text("It's not how much we give, \n but how much love we put into giving")
                         .font(.title3)
                         .fontWeight(.light)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 10)
-                    
                 } //: HEADER
                 
                 // MARK: - CENTER
-                
                 ZStack {
-                    CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ImageName: "character-1")
+                    CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ImageName: "character-2")
                 } //: CENTER
                 
                 Spacer()
                 
                 // MARK: - FOOTER
-                
                 ZStack {
                     // PART OF THE CUSTOM BUTTON
                     // 1. BACKGROUND (STATIC)
@@ -67,15 +63,15 @@ struct OnboardingView: View {
                         .foregroundColor(.white)
                         .offset(x: 20)
                     
-                    // 3. CAPSULE (DYNAMIC RANGE
+                    // 3. CAPSULE (DYNAMIC RANGE)
                     HStack {
                         Capsule()
                             .fill(Color("ColorRed"))
-                            .frame(width: 80)
+                            .frame(width: buttonOffset + 80)
                         
                         Spacer()
                     }
-                    // 4. CIRCLE (DRAGGABLE
+                    // 4. CIRCLE (DRAGGABLE)
                     HStack {
                         ZStack{
                             Circle()
@@ -88,15 +84,29 @@ struct OnboardingView: View {
                         }
                         .foregroundColor(.white)
                         .frame(width: 80, height: 80, alignment: .center)
-                        .onTapGesture {
-                            isOnBoardingViewActive = false
-                        }
+                        .offset(x: buttonOffset)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { gesture in
+                                    if gesture.translation.width > 0 && buttonOffset <= buttonWidth - 80 {
+                                        buttonOffset = gesture.translation.width
+                                    }
+                                }
+                                .onEnded { _ in
+                                    if buttonOffset > buttonWidth / 2 {
+                                        buttonOffset = buttonWidth - 80
+                                        isOnboardingViewActive.toggle()
+                                    } else {
+                                    buttonOffset = 0
+                                    }
+                                }
+                        ) //: GESTURE
                         
                         Spacer()
-                    }
-                    
+                        
+                    } //: HSTACK
                 } //: FOOTER
-                .frame(height: 80, alignment: .center)
+                .frame(width: buttonWidth, height: 80, alignment: .center)
                 .padding()
                 
             } //: VSTACK
