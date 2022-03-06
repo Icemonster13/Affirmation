@@ -10,15 +10,17 @@ import SwiftUI
 struct SettingsView: View {
     
     // MARK: - PROPERTIES
+    
+    // Access the UserDefaults
     @AppStorage("onboard") var isOnboardingViewActive: Bool = false
     @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
     @AppStorage("settings") var isSettingViewActive: Bool = true
     @AppStorage("highscore") var highScore = 0
     @AppStorage("totalwords") var totalWords = 0
-    
-    @State private var isSoundEnabled: Bool = true
+    @AppStorage("soundenabled") private var isSoundEnabled: Bool = true
     
     // MARK: - BODY
+    
     var body: some View {
         ZStack {
             VStack {
@@ -37,66 +39,35 @@ struct SettingsView: View {
                             Text("A word game where you list as many words as you can from the given affirmation or phrase. Inspired by my beautiful wife, this project allowed me to learn SwiftUI while designing one of her favorite games.")
                                 .font(.footnote)
                                 .fontWeight(.semibold)
-                                .padding(2)
                             Text("Let it inspire you!")
                                 .font(.callout)
                                 .fontWeight(.heavy)
                                 .foregroundColor(Color.green)
-                        }
-                    }
+                                .padding()
+                        } //: VSTACK
+                        .padding(10)
+                    } //: SECTION
                     
                     // MARK: - SETTING SECTION
                     Section(header: Text("Settings")) {
                         VStack {
                             HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Color.gray)
-                                    Image(systemName: "speaker.wave.3")
-                                        .foregroundColor(Color.white)
-                                        .font(.footnote)
-                                } //: ZSTACK
-                                .frame(width: 28, height: 28, alignment: .center)
-                                Text("Sound Effects")
-                                    .foregroundColor(Color.gray)
-                                    .font(.footnote)
-                                Spacer()
+                                FormSettingRowView(icon: "speaker.wave.3", firsttext: "Sound Effects")
                                 Toggle("Turn sound on or off", isOn: $isSoundEnabled)
                                     .labelsHidden()
                             } //: HSTACK
                             HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Color.gray)
-                                    Image(systemName: "rosette")
-                                        .foregroundColor(Color.white)
-                                        .font(.footnote)
-                                } //: ZSTACK
-                                .frame(width: 28, height: 28, alignment: .center)
-                                Text("High Score")
-                                    .foregroundColor(Color.gray)
-                                    .font(.footnote)
-                                Spacer()
+                                FormSettingRowView(icon: "rosette", firsttext: "High Score")
                                 Text(String(highScore))
                                     .font(.footnote)
                             } //: HSTACK
                             HStack {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(Color.gray)
-                                    Image(systemName: "textformat.abc.dottedunderline")
-                                        .foregroundColor(Color.white)
-                                        .font(.footnote)
-                                } //: ZSTACK
-                                .frame(width: 28, height: 28, alignment: .center)
-                                Text("Total Words Played")
-                                    .foregroundColor(Color.gray)
-                                    .font(.footnote)
-                                Spacer()
+                                FormSettingRowView(icon: "textformat.abc.dottedunderline", firsttext: "Total Words Played")
                                 Text(String(totalWords))
                                     .font(.footnote)
                             } //: HSTACK
                             Button(action: {
+                                // Reset the UserDefaults for 'highscore' and 'totalwords'
                                 highScore = 0
                                 totalWords = 0
                             }) {
@@ -106,25 +77,26 @@ struct SettingsView: View {
                                     .font(.system(.subheadline, design: .rounded))
                                     .fontWeight(.bold)
                             } //: BUTTON
+                            .tint(Color.blue)
                             .buttonStyle(.borderedProminent)
                             .buttonBorderShape(.capsule)
                             .controlSize(.regular)
                         }
                         .padding(.top, 8)
                         .padding(.bottom, 8)
-                    }
+                    } //: SECTION
                     
                     // MARK: - ABOUT SECTION
                     Section(header: Text("About the application")) {
                         VStack {
-                            FormRowStaticView(icon: "scribble.variable", firstText: "Application", secondText: "Affirmation", fillColor: Color.blue)
-                            FormRowStaticView(icon: "wrench.and.screwdriver", firstText: "Designer", secondText: "Michael Pascucci", fillColor: Color.green)
-                            FormRowStaticView(icon: "gearshape", firstText: "Compatibility", secondText: "iPhone / iPad", fillColor: Color.orange)
-                            FormRowStaticView(icon: "exclamationmark.shield", firstText: "Version", secondText: "1.0.0", fillColor: Color.yellow)
+                            FormAboutRowView(icon: "scribble.variable", firstText: "Application", secondText: "Affirmation", fillColor: Color.blue)
+                            FormAboutRowView(icon: "wrench.and.screwdriver", firstText: "Designer", secondText: "Michael Pascucci", fillColor: Color.green)
+                            FormAboutRowView(icon: "gearshape", firstText: "Compatibility", secondText: "iPhone / iPad", fillColor: Color.orange)
+                            FormAboutRowView(icon: "exclamationmark.shield", firstText: "Version", secondText: "1.0.0", fillColor: Color.yellow)
                         } //: VSTACK
                         .padding(.top, 8)
                         .padding(.bottom, 8)
-                    }
+                    } //: SECTION
                 } //: FORM
                 
                 // MARK: - FOOTER
@@ -148,10 +120,11 @@ struct SettingsView: View {
             })
             , alignment: .topTrailing
         )
-    }
-}
+    } //: VIEW
+} //: STRUCT
 
 // MARK: - PREVIEW
+
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()

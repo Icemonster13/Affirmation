@@ -10,24 +10,22 @@ import SwiftUI
 struct ContentView: View {
     
     // MARK: - PROPERTIES
-    @AppStorage("onboard") var isOnboardingViewActive: Bool = true
+    
+    // Access the UserDefaults data
+    @AppStorage("home") var isHomeViewActive: Bool = true
     @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
     @AppStorage("settings") var isSettingViewActive: Bool = false
     
     // MARK: - BODY
     var body: some View {
         
-        ZStack {
-            if isOnboardingViewActive {
-                OnboardingView()
-            } else if isPuzzleViewActive {
-                PuzzleView()
-            } else if isSettingViewActive {
-                SettingsView()
-            } else {
-                HomeView()
-            }
-        } //: ZSTACK
+        if isPuzzleViewActive {
+            PuzzleView()
+        } else if isSettingViewActive {
+            SettingsView()
+        } else {
+            HomeView()
+        }
     }
 }
 

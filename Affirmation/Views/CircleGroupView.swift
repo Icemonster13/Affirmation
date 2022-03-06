@@ -27,6 +27,7 @@ struct CircleGroupView: View {
                 .resizable()
                 .scaledToFit()
                 .padding()
+                .frame(minWidth: 260, idealWidth: 300, maxWidth: 500, minHeight: 260, idealHeight: 300, maxHeight: 500, alignment: .center)
         } //: ZSTACK
     }
 }
@@ -38,7 +39,7 @@ struct CircleGroupView_Previews: PreviewProvider {
             Color("ColorBlue")
                 .ignoresSafeArea(.all, edges: .all)
             
-            CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ImageName: "character-1")
+            CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ImageName: "character-2")
             
         }
     }

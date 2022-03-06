@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C311E67027BA9EC700FDE356 /* CircleGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C311E66F27BA9EC700FDE356 /* CircleGroupView.swift */; };
+		C34298CB27D4F603007A4F66 /* FormSettingRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34298CA27D4F603007A4F66 /* FormSettingRowView.swift */; };
 		C35BAAD827C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C35BAAD727C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf */; };
 		C35BAAD927C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C35BAAD727C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf */; };
 		C35BAADA27C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C35BAAD727C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf */; };
@@ -28,7 +29,7 @@
 		C398BBD427CA5AF8002488E3 /* Wrong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C398BBD227CA5AF8002488E3 /* Wrong.mp3 */; };
 		C398BBD627CA5D53002488E3 /* PlaySounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C398BBD527CA5D53002488E3 /* PlaySounds.swift */; };
 		C398BBD827CA5F9C002488E3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C398BBD727CA5F9C002488E3 /* SettingsView.swift */; };
-		C398BBDA27CA6F10002488E3 /* FormRowStaticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C398BBD927CA6F10002488E3 /* FormRowStaticView.swift */; };
+		C398BBDA27CA6F10002488E3 /* FormAboutRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C398BBD927CA6F10002488E3 /* FormAboutRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		C311E66F27BA9EC700FDE356 /* CircleGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleGroupView.swift; sourceTree = "<group>"; };
+		C34298CA27D4F603007A4F66 /* FormSettingRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormSettingRowView.swift; sourceTree = "<group>"; };
 		C35BAAD727C271BD00EBCC51 /* ShadowsIntoLightTwo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShadowsIntoLightTwo-Regular.ttf"; sourceTree = "<group>"; };
 		C375D21027BA82FC00D13F2A /* Affirmation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Affirmation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C375D21327BA82FD00D13F2A /* AffirmationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffirmationApp.swift; sourceTree = "<group>"; };
@@ -72,7 +74,7 @@
 		C398BBD227CA5AF8002488E3 /* Wrong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Wrong.mp3; sourceTree = "<group>"; };
 		C398BBD527CA5D53002488E3 /* PlaySounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySounds.swift; sourceTree = "<group>"; };
 		C398BBD727CA5F9C002488E3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		C398BBD927CA6F10002488E3 /* FormRowStaticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRowStaticView.swift; sourceTree = "<group>"; };
+		C398BBD927CA6F10002488E3 /* FormAboutRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormAboutRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,7 +198,8 @@
 			isa = PBXGroup;
 			children = (
 				C311E66F27BA9EC700FDE356 /* CircleGroupView.swift */,
-				C398BBD927CA6F10002488E3 /* FormRowStaticView.swift */,
+				C398BBD927CA6F10002488E3 /* FormAboutRowView.swift */,
+				C34298CA27D4F603007A4F66 /* FormSettingRowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,13 +351,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C311E67027BA9EC700FDE356 /* CircleGroupView.swift in Sources */,
-				C398BBDA27CA6F10002488E3 /* FormRowStaticView.swift in Sources */,
+				C398BBDA27CA6F10002488E3 /* FormAboutRowView.swift in Sources */,
 				C375D24727BA872E00D13F2A /* HomeView.swift in Sources */,
 				C375D24927BA874800D13F2A /* OnboardingView.swift in Sources */,
 				C398BBD827CA5F9C002488E3 /* SettingsView.swift in Sources */,
 				C37C82CD27C113990088FA4E /* PuzzleView.swift in Sources */,
 				C375D21627BA82FD00D13F2A /* ContentView.swift in Sources */,
 				C398BBD627CA5D53002488E3 /* PlaySounds.swift in Sources */,
+				C34298CB27D4F603007A4F66 /* FormSettingRowView.swift in Sources */,
 				C375D21427BA82FD00D13F2A /* AffirmationApp.swift in Sources */,
 				C37C82CB27C112FF0088FA4E /* Constants.swift in Sources */,
 			);

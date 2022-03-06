@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FormRowStaticView: View {
+struct FormAboutRowView: View {
 
     // MARK: - PROPERTIES
     var icon: String
@@ -39,7 +39,7 @@ struct FormRowStaticView: View {
 // MARK: - PREVIEW
 struct FormRowStaticView_Previews: PreviewProvider {
     static var previews: some View {
-        FormRowStaticView(icon: "scribble.variable", firstText: "Application", secondText: "Affirmation", fillColor: Color.gray)
+        FormAboutRowView(icon: "scribble.variable", firstText: "Application", secondText: "Affirmation", fillColor: Color.gray)
             .previewLayout(.fixed(width: 375, height: 60))
             .padding()
     }

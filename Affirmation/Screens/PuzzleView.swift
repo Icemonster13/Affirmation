@@ -8,24 +8,31 @@
 import SwiftUI
 
 struct PuzzleView: View {
+    
     // MARK: - PROPERTIES
+    
+    // Access the UserDefaults
     @AppStorage("onboard") var isOnboardingViewActive: Bool = false
     @AppStorage("puzzle") var isPuzzleViewActive: Bool = true
     @AppStorage("settings") var isSettingViewActive: Bool = false
+    
     @AppStorage("currentscore") var currentScore = 0
     @AppStorage("highscore") var highScore = 0
     @AppStorage("totalwords") var totalWords = 0
+    @AppStorage("soundenabled") private var isSoundEnabled: Bool = true
     
+    // Create variables to store the new word and the list of used words
     @State private var newWord = ""
     @State private var usedWord = [String]()
     
+    // Create variables to store the status message and color
     @State private var statusMessage = ""
     @State private var statusColor = Color.clear
     
+    // Constant to hold the Affirmation Phrase
     let rootWord = "choose happiness"
     
-    let uDefaults = UserDefaults.standard
-    
+    // Constant for the grid layout structure
     let layout = [
         GridItem(.flexible(), alignment: .leading),
         GridItem(.flexible(), alignment: .leading),
@@ -33,6 +40,7 @@ struct PuzzleView: View {
     ]
     
     // MARK: - BODY
+    
     var body: some View {
         
         ZStack {
@@ -55,22 +63,49 @@ struct PuzzleView: View {
                                     .fontWeight(.ultraLight)
                             } //: END OF HSTACK
                             HStack {
-                                Text(statusMessage)
-                                    .padding(6)
-                                    .background(statusColor)
-                                
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .fill(statusColor)
+                                    Text(statusMessage)
+                                        .padding(3)
+                                        .foregroundColor(.white)
+                                }//: END OF ZSTACK
+                                .padding(.trailing, 15)
                                 Spacer()
                                 Text("Current: \(currentScore)")
                                     .font(.callout)
                                     .fontWeight(.ultraLight)
                             }//: END OF HSTACK
+                            HStack() {
+                                Spacer()
+                                Button(action: {
+                                    // Reset the UserDefaults for 'currentscore' and 'puzzlewords'
+                                    // Reset the status color and message
+                                    currentScore = 0
+                                    usedWord.removeAll()
+                                    UserDefaults.standard.set(usedWord, forKey: "puzzlewords")
+                                    statusColor = Color.clear
+                                    statusMessage = ""
+                                }) {
+                                    Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
+                                        .imageScale(.large)
+                                    Text("Reset Game")
+                                        .font(.system(.subheadline, design: .rounded))
+                                        .fontWeight(.bold)
+                                } //: BUTTON
+                                .tint(Color.blue)
+                                .buttonStyle(.borderedProminent)
+                                .buttonBorderShape(.capsule)
+                                .controlSize(.regular)
+                                Spacer()
+                            } //: HSTACK
+                            .padding(5)
                         } //: END OF VSTACK
                     } //: END OF SECTION
                     
                     Section {
                         ScrollView(.vertical) {
                             LazyVGrid(columns: layout, spacing: 8) {
-                                // ForEach(data, id: \.self) { word in // Used to show test data
                                 ForEach(usedWord, id: \.self) { word in
                                     HStack() {
                                         Image(systemName: "\(word.count).square.fill")
@@ -83,14 +118,14 @@ struct PuzzleView: View {
                                 } //: END OF FOREACH
                             } //: END OF LAZYVGRID
                         } //: END OF SCROLLVIEW
-                        .frame(minWidth: 0, idealWidth: 300, maxWidth: .infinity, minHeight: 0, idealHeight: 500, maxHeight: 500)
+                        .frame(minWidth: 0, idealWidth: 300, maxWidth: 500, minHeight: 0, idealHeight: 500, maxHeight: 500, alignment: .center)
                         .padding(0)
                         .background(Image("Notebook Paper 3")
                                         .offset(y: -12))
                     } //: END OF SECTION
                 } //: FORM
                 .onAppear {
-                    usedWord = uDefaults.object(forKey:"puzzlewords") as? [String] ?? [String]()
+                    usedWord = UserDefaults.standard.object(forKey:"puzzlewords") as? [String] ?? [String]()
                 }
             } //: VSTACK
             .overlay(
@@ -118,7 +153,7 @@ struct PuzzleView: View {
                 , alignment: .topLeading
             )
         } //: ZSTACK
-    }
+    } //: VIEW
     
     // MARK: - METHODS
     
@@ -127,7 +162,7 @@ struct PuzzleView: View {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         // Ensure there is more that 0 letters being added
         guard answer.count > 0 else {
-            playSound(sound: "Wrong", type: "mp3")
+            playSound(sound: "Wrong", type: "mp3", enabled: isSoundEnabled)
             return
         }
         
@@ -135,7 +170,7 @@ struct PuzzleView: View {
             statusColor = Color.yellow
             statusMessage = k.isOriginal.randomElement() ?? ""
             newWord = ""
-            playSound(sound: "Wrong", type: "mp3")
+            playSound(sound: "Wrong", type: "mp3", enabled: isSoundEnabled)
             return
         }
         
@@ -143,7 +178,7 @@ struct PuzzleView: View {
             statusColor = Color.orange
             statusMessage = k.isPossible.randomElement() ?? ""
             newWord = ""
-            playSound(sound: "Wrong", type: "mp3")
+            playSound(sound: "Wrong", type: "mp3", enabled: isSoundEnabled)
             return
         }
         
@@ -151,7 +186,7 @@ struct PuzzleView: View {
             statusColor = Color.red
             statusMessage = k.isReal.randomElement() ?? ""
             newWord = ""
-            playSound(sound: "Wrong", type: "mp3")
+            playSound(sound: "Wrong", type: "mp3", enabled: isSoundEnabled)
             return
         }
         
@@ -159,7 +194,7 @@ struct PuzzleView: View {
             statusColor = Color.red
             statusMessage = k.isReal.randomElement() ?? ""
             newWord = ""
-            playSound(sound: "Wrong", type: "mp3")
+            playSound(sound: "Wrong", type: "mp3", enabled: isSoundEnabled)
             return
         }
         
@@ -167,13 +202,13 @@ struct PuzzleView: View {
         withAnimation {
             usedWord.insert(answer, at: 0)
         }
-        uDefaults.set(usedWord, forKey: "puzzlewords")
+        UserDefaults.standard.set(usedWord, forKey: "puzzlewords")
         currentScore += answer.count
         if currentScore > highScore {
             highScore = currentScore
         }
         totalWords += 1
-        playSound(sound: "Correct", type: "mp3")
+        playSound(sound: "Correct", type: "mp3", enabled: isSoundEnabled)
         
         // Reset the newWord to blank
         statusColor = Color.green
@@ -209,9 +244,10 @@ struct PuzzleView: View {
     func hasSpaces(word: String) -> Bool {
         !word.contains(" ")
     }
-}
+} //: STRUCT
 
 // MARK: - PREVIEW
+
 struct PuzzleView_Previews: PreviewProvider {
     static var previews: some View {
         PuzzleView()
