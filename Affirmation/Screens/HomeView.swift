@@ -17,12 +17,12 @@ struct HomeView: View {
     @AppStorage("settings") var isSettingViewActive: Bool = false
     @AppStorage("gamestartdate") var gameStartDate: String = "01-01-1901"
     @AppStorage("currentscore") var currentScore = 0
+    @AppStorage("phraseid") var phraseID: Int = 1
     
     // Create a variable for showing alerts
     @State private var showingAlert: Bool = false
     
-    // Set a constant for the date formatter to compare to today's date
-    let df = DateFormatter()
+    var affirmation: Affirmation
     
     // MARK: BODY
     
@@ -32,32 +32,26 @@ struct HomeView: View {
             Color("ColorBlue")
                 .ignoresSafeArea(.all, edges: .all)
             
-            VStack(spacing: 20) {
+            VStack(spacing: 10) {
                 
                 Spacer()
                 
                 VStack(spacing: 0) {
                     Text("affirmation!")
-                        .font(.system(size: 60))
+                        .font(.system(size: 60, design: .rounded))
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
-                    Text("It's not how much we give, \n but how much love we put into giving")
-                        .font(.title3)
-                        .fontWeight(.light)
+                    Text(Date(), style: .date)
+                        .font(.headline)
                         .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 10)
                 } //: VSTACK
                 
                 ZStack {
                     CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.1, ImageName: "character-2")
                 }
                 
-                Text(Date(), style: .date)
-                    .font(.headline)
-                
-                Text("The time that leads to mastery is dependent\n on the intesity of our focus.")
-                    .font(.title3)
+                Text(affirmation.affirmation)
+                    .font(.title)
                     .fontWeight(.light)
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
@@ -67,8 +61,8 @@ struct HomeView: View {
                 
                 Button(action: {
                     // Set the UserDefault 'gamestartdate' = to today's date
-                    df.dateFormat = "dd-MM-yyyy"
-                    gameStartDate = df.string(from: Date())
+                    k.df.dateFormat = "dd-MM-yyyy"
+                    gameStartDate = k.df.string(from: Date())
                     isPuzzleViewActive.toggle()
                 }) {
                     Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
@@ -91,17 +85,23 @@ struct HomeView: View {
             // Compare today's date to the UserDefault 'gamestartdate'
             // If the dates are different, reset the UserDefault 'puzzlewords'
             // and the UserDefault 'currentscore'
-            df.dateFormat = "dd-MM-yyyy"
-            let todaysDate = df.string(from: Date())
+            k.df.dateFormat = "dd-MM-yyyy"
+            let todaysDate = k.df.string(from: Date())
             if gameStartDate != todaysDate {
                 showingAlert = true
                 UserDefaults.standard.set([String](), forKey: "puzzlewords")
                 currentScore = 0
+                // Choose the next phrase in the array. If it has hit the end, start over.
+                if (phraseID + 1) > (k.affirmationCount - 1) {
+                    phraseID = 0
+                } else {
+                    phraseID += 1
+                }
             } //: IF
         } //: ONAPPEAR
         
         // Create the alert
-        .alert("A new day means a new puzzle", isPresented: $showingAlert) {
+        .alert("A new day means a new puzzle.", isPresented: $showingAlert) {
             Button("OK", role: .cancel) { }
         } //: ALERT
     
@@ -112,6 +112,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(affirmation: affirmationData[1])
     }
 }

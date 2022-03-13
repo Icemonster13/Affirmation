@@ -18,24 +18,35 @@ struct SettingsView: View {
     @AppStorage("highscore") var highScore = 0
     @AppStorage("totalwords") var totalWords = 0
     @AppStorage("soundenabled") private var isSoundEnabled: Bool = true
+    @AppStorage("darkmodeenabled") private var isDarkModeEnabled: Bool = false
     
     // MARK: - BODY
     
     var body: some View {
         ZStack {
             VStack {
-                Text("Settings")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .padding(.all, 0.0)
-                    .background(Color("ColorFormBackground"))
+                HStack {
+                    Spacer()
+                    Text("Settings")
+                        .font(.system(.title, design: .rounded))
+                        .fontWeight(.heavy)
+                        .background(Color("ColorFormBackground"))
+                    Spacer()
+                    Button(action: {
+                        isPuzzleViewActive = true
+                    }, label: {
+                        Image(systemName: "xmark.circle")
+                            .font(.title)
+                            .foregroundColor(.primary)
+                    })
+                } //: HSTACK
+                .padding(.horizontal, 10)
                 
                 Form {
                     
                     // MARK: - APPLICATION SECTIONS
-                    
                     Section(header: Text("Affirmation")) {
-                        VStack {
+                        VStack(alignment: .center, spacing: 15) {
                             Text("A word game where you list as many words as you can from the given affirmation or phrase. Inspired by my beautiful wife, this project allowed me to learn SwiftUI while designing one of her favorite games.")
                                 .font(.footnote)
                                 .fontWeight(.semibold)
@@ -43,9 +54,8 @@ struct SettingsView: View {
                                 .font(.callout)
                                 .fontWeight(.heavy)
                                 .foregroundColor(Color.green)
-                                .padding()
+                                .padding(.bottom, 10)
                         } //: VSTACK
-                        .padding(10)
                     } //: SECTION
                     
                     // MARK: - SETTING SECTION
@@ -54,6 +64,11 @@ struct SettingsView: View {
                             HStack {
                                 FormSettingRowView(icon: "speaker.wave.3", firsttext: "Sound Effects")
                                 Toggle("Turn sound on or off", isOn: $isSoundEnabled)
+                                    .labelsHidden()
+                            } //: HSTACK
+                            HStack {
+                                FormSettingRowView(icon: "moon.circle", firsttext: "Dark Mode")
+                                Toggle("Turn dark mode on or off", isOn: $isDarkModeEnabled)
                                     .labelsHidden()
                             } //: HSTACK
                             HStack {
@@ -82,20 +97,18 @@ struct SettingsView: View {
                             .buttonBorderShape(.capsule)
                             .controlSize(.regular)
                         }
-                        .padding(.top, 8)
-                        .padding(.bottom, 8)
+                        .padding(.vertical, 10)
                     } //: SECTION
                     
                     // MARK: - ABOUT SECTION
                     Section(header: Text("About the application")) {
                         VStack {
-                            FormAboutRowView(icon: "scribble.variable", firstText: "Application", secondText: "Affirmation", fillColor: Color.blue)
-                            FormAboutRowView(icon: "wrench.and.screwdriver", firstText: "Designer", secondText: "Michael Pascucci", fillColor: Color.green)
-                            FormAboutRowView(icon: "gearshape", firstText: "Compatibility", secondText: "iPhone / iPad", fillColor: Color.orange)
-                            FormAboutRowView(icon: "exclamationmark.shield", firstText: "Version", secondText: "1.0.0", fillColor: Color.yellow)
+                            FormAboutRowView(icon: "scribble.variable", firstText: k.name[0], secondText: k.name[1], fillColor: Color.blue)
+                            FormAboutRowView(icon: "wrench.and.screwdriver", firstText: k.designer[0], secondText: k.designer[1], fillColor: Color.green)
+                            FormAboutRowView(icon: "gearshape", firstText: k.compatibility[0], secondText: k.compatibility[1], fillColor: Color.orange)
+                            FormAboutRowView(icon: "exclamationmark.shield", firstText: k.version[0], secondText: k.version[1], fillColor: Color.yellow)
                         } //: VSTACK
-                        .padding(.top, 8)
-                        .padding(.bottom, 8)
+                        .padding(.vertical, 10)
                     } //: SECTION
                 } //: FORM
                 
@@ -109,17 +122,6 @@ struct SettingsView: View {
             } //: END VSTACK
         } //: ZSTACK
         .background(Color("ColorFormBackground"))
-        .overlay(
-            Button(action: {
-                isPuzzleViewActive = true
-            }, label: {
-                Image(systemName: "xmark.circle")
-                    .font(.title)
-                    .foregroundColor(.secondary)
-                    .padding(.trailing, 4)
-            })
-            , alignment: .topTrailing
-        )
     } //: VIEW
 } //: STRUCT
 

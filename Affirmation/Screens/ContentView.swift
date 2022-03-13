@@ -15,16 +15,17 @@ struct ContentView: View {
     @AppStorage("home") var isHomeViewActive: Bool = true
     @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
     @AppStorage("settings") var isSettingViewActive: Bool = false
+    @AppStorage("phraseid") var phraseID: Int = 1
     
     // MARK: - BODY
     var body: some View {
         
         if isPuzzleViewActive {
-            PuzzleView()
+            PuzzleView(affirmation: affirmationData[phraseID])
         } else if isSettingViewActive {
             SettingsView()
         } else {
-            HomeView()
+            HomeView(affirmation: affirmationData[phraseID])
         }
     }
 }
