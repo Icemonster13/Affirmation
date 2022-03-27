@@ -60,7 +60,7 @@ struct HomeView: View {
                 Spacer()
                 
                 Button(action: {
-                    // Set the UserDefault 'gamestartdate' = to today's date
+                    // Set the UserDefault 'gamestartdate' equal to today's date
                     k.df.dateFormat = "dd-MM-yyyy"
                     gameStartDate = k.df.string(from: Date())
                     isPuzzleViewActive.toggle()

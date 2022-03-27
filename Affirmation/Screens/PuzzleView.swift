@@ -91,7 +91,7 @@ struct PuzzleView: View {
                             .font(.system(.footnote, design: .rounded))
                             .fontWeight(.bold)
                     } //: BUTTON
-                    .tint(Color.blue)
+                    .tint(Color("ColorBlue"))
                     .buttonStyle(.borderedProminent)
                     .buttonBorderShape(.capsule)
                     .controlSize(.regular)
