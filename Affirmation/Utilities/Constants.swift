@@ -18,7 +18,7 @@ struct k {
     static let icon =                   ["Icon Graphics", "Canva.com"]
     
     static let isPossible =             ["Word is not possible", "Try again"]
-    static let isOriginal =             ["Oops, already used", "Be more original", "Try again"]
+    static let isOriginal =             ["Oops, already used", "Try again"]
     static let isReal =                 ["You can't make them up", "It must be a real word"]
     static let isAccepted =             ["Great Job!", "Fantastic", "Well Done", "Stupendous", "Phenomonal"]
     

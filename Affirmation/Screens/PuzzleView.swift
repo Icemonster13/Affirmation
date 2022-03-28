@@ -19,7 +19,10 @@ struct PuzzleView: View {
     @AppStorage("currentscore") var currentScore = 0
     @AppStorage("highscore") var highScore = 0
     @AppStorage("totalwords") var totalWords = 0
+    @AppStorage("highwords") var highWords = 0
+    
     @AppStorage("soundenabled") private var isSoundEnabled: Bool = true
+    @AppStorage("gamereset") private var isGameReset: Bool = false
     
     // Create variables to store the new word and the list of used words
     @State private var newWord = ""
@@ -82,6 +85,7 @@ struct PuzzleView: View {
                         currentScore = 0
                         usedWord.removeAll()
                         UserDefaults.standard.set(usedWord, forKey: "puzzlewords")
+                        totalWords = usedWord.count
                         statusColor = Color.clear
                         statusMessage = ""
                     }) {
@@ -139,11 +143,13 @@ struct PuzzleView: View {
                     .padding(.horizontal, 15)
                     .padding(.vertical, 15)
 
-                Text("Correct Answers")
+                Text("Correct Answers ( \(totalWords) )")
                     .font(.title2)
-
+                    .multilineTextAlignment(.center)
+                
                 ScrollView(.vertical) {
                     LazyVGrid(columns: layout, spacing: 1) {
+                        
                         ForEach(usedWord, id: \.self) { word in
                             VStack(alignment: .center, spacing: 4) {
                                 HStack() {
@@ -166,6 +172,15 @@ struct PuzzleView: View {
         } //: END OF ZSTACK
         .background(Color("ColorFormBackground"))
         .onAppear {
+            if isGameReset {
+                currentScore = 0
+                usedWord.removeAll()
+                UserDefaults.standard.set(usedWord, forKey: "puzzlewords")
+                totalWords = usedWord.count
+                statusColor = Color.clear
+                statusMessage = ""
+                isGameReset.toggle()
+            }
             usedWord = UserDefaults.standard.object(forKey:"puzzlewords") as? [String] ?? [String]()
         }
     }
@@ -223,6 +238,9 @@ struct PuzzleView: View {
             highScore = currentScore
         }
         totalWords += 1
+        if totalWords > highWords {
+            highWords = totalWords
+        }
         playSound(sound: "Correct", type: "mp3", enabled: isSoundEnabled)
         
         // Reset the newWord to blank

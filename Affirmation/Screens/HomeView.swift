@@ -47,7 +47,7 @@ struct HomeView: View {
                 } //: VSTACK
                 
                 ZStack {
-                    CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.1, ImageName: "character-2")
+                    CircleGroupView(ShapeColor: .green, ShapeOpacity: 0.5, ImageName: "character-2")
                 }
                 
                 Text(affirmation.affirmation)

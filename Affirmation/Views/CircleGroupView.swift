@@ -39,7 +39,7 @@ struct CircleGroupView_Previews: PreviewProvider {
             Color("ColorBlue")
                 .ignoresSafeArea(.all, edges: .all)
             
-            CircleGroupView(ShapeColor: .white, ShapeOpacity: 0.2, ImageName: "character-2")
+            CircleGroupView(ShapeColor: .green, ShapeOpacity: 0.5, ImageName: "character-2")
             
         }
     }

@@ -16,9 +16,10 @@ struct SettingsView: View {
     @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
     @AppStorage("settings") var isSettingViewActive: Bool = true
     @AppStorage("highscore") var highScore = 0
-    @AppStorage("totalwords") var totalWords = 0
+    @AppStorage("highwords") var highWords = 0
     @AppStorage("soundenabled") private var isSoundEnabled: Bool = true
     @AppStorage("darkmodeenabled") private var isDarkModeEnabled: Bool = false
+    @AppStorage("gamereset") private var isGameReset: Bool = false
     
     // MARK: - BODY
     
@@ -71,33 +72,42 @@ struct SettingsView: View {
                                 Toggle("Turn dark mode on or off", isOn: $isDarkModeEnabled)
                                     .labelsHidden()
                             } //: HSTACK
+
+                            Button(action: {
+                                // Reset the UserDefaults for 'highscore' and 'totalwords'
+                                highScore = 0
+                                highWords = 0
+                                isGameReset.toggle()
+                            }) {
+                                Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
+                                    .imageScale(.large)
+                                Text("Reset All")
+                                    .font(.system(.subheadline, design: .rounded))
+                                    .fontWeight(.bold)
+                            } //: BUTTON
+                            .tint(Color("ColorBlue"))
+                            .buttonStyle(.borderedProminent)
+                            .buttonBorderShape(.capsule)
+                            .controlSize(.regular)
+                        }
+                        .padding(.vertical, 5)
+                    } //: SECTION
+                    
+                    // MARK: - HIGH SCORE
+                    Section(header: Text("Accolades (Single Game)")) {
+                        VStack{
                             HStack {
                                 FormSettingRowView(icon: "rosette", firsttext: "High Score")
                                 Text(String(highScore))
                                     .font(.footnote)
                             } //: HSTACK
                             HStack {
-                                FormSettingRowView(icon: "textformat.abc.dottedunderline", firsttext: "Total Words Played")
-                                Text(String(totalWords))
+                                FormSettingRowView(icon: "textformat.abc.dottedunderline", firsttext: "Most Words Played")
+                                Text(String(highWords))
                                     .font(.footnote)
                             } //: HSTACK
-                            Button(action: {
-                                // Reset the UserDefaults for 'highscore' and 'totalwords'
-                                highScore = 0
-                                totalWords = 0
-                            }) {
-                                Image(systemName: "arrow.triangle.2.circlepath.circle.fill")
-                                    .imageScale(.large)
-                                Text("Reset All Statistics")
-                                    .font(.system(.subheadline, design: .rounded))
-                                    .fontWeight(.bold)
-                            } //: BUTTON
-                            .tint(Color.blue)
-                            .buttonStyle(.borderedProminent)
-                            .buttonBorderShape(.capsule)
-                            .controlSize(.regular)
-                        }
-                        .padding(.vertical, 10)
+                        }//: VSTACK
+                        .padding(.vertical, 5)
                     } //: SECTION
                     
                     // MARK: - ABOUT SECTION
@@ -108,7 +118,7 @@ struct SettingsView: View {
                             FormAboutRowView(icon: "gearshape", firstText: k.compatibility[0], secondText: k.compatibility[1], fillColor: Color.orange)
                             FormAboutRowView(icon: "exclamationmark.shield", firstText: k.version[0], secondText: k.version[1], fillColor: Color.yellow)
                         } //: VSTACK
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 5)
                     } //: SECTION
                 } //: FORM
                 
