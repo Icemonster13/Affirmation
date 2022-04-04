@@ -15,7 +15,7 @@ struct ContentView: View {
     @AppStorage("home") var isHomeViewActive: Bool = true
     @AppStorage("puzzle") var isPuzzleViewActive: Bool = false
     @AppStorage("settings") var isSettingViewActive: Bool = false
-    @AppStorage("phraseid") var phraseID: Int = 1
+    @AppStorage("phraseid") var phraseID: Int = 2
     
     // MARK: - BODY
     var body: some View {
