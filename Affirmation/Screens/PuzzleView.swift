@@ -32,6 +32,9 @@ struct PuzzleView: View {
     @State private var statusMessage = ""
     @State private var statusColor = Color.clear
     
+    // Create variable to keep focus on the text block
+    @FocusState private var isTextFocused: Bool
+    
     // Constant for the grid layout structure
     let layout = [
         GridItem(.adaptive(minimum: 120))
@@ -128,6 +131,7 @@ struct PuzzleView: View {
                     .border(Color.primary, width: 1)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 5)
+                    .focused($isTextFocused)
                 ZStack {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .fill(statusColor)
@@ -247,6 +251,9 @@ struct PuzzleView: View {
         statusColor = Color.green
         statusMessage = k.isAccepted.randomElement() ?? ""
         newWord = ""
+        
+        // Return focus to the text field
+        isTextFocused = true
     }
     
     func isOriginal(word: String) -> Bool {
