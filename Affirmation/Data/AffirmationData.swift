@@ -19,5 +19,6 @@ Ensure you make the following updates:
 let affirmationData: [Affirmation] = [
     Affirmation(phrase: "choose happiness", affirmation: "Life is yours!\n'Choose Happiness'"),
     Affirmation(phrase: "embrace your faults", affirmation: "Nobody is perfect.\nOur faults make us unique.\n'Embrace Your Faults'"),
-    Affirmation(phrase: "live every day", affirmation: "Life is precious.\nLive every day to its' fullest")
+    Affirmation(phrase: "live every day", affirmation: "Life is precious.\nLive every day to its' fullest"),
+    Affirmation(phrase: "Test data", affirmation: "Test data")
 ]
