@@ -22,7 +22,7 @@ struct k {
     static let isReal =                 ["You can't make them up", "It must be a real word"]
     static let isAccepted =             ["Great Job!", "Fantastic", "Well Done", "Stupendous", "Phenomonal"]
     
-    static let affirmationCount =       2
+    static let affirmationCount =       3
     
     static let df = DateFormatter()
     
